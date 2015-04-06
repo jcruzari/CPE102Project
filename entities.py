@@ -23,6 +23,9 @@ class MinerNotFull:
    def set_position(self, point):
       self.position = point
 
+   def get_position(self):
+      return self.position
+
 class MinerFull:
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
@@ -39,6 +42,9 @@ class MinerFull:
    def set_position(self, point):
       self.position = point
 
+   def get_position(self):
+      return self.position
+
 class Vein:
    def __init__(self, name, rate, position, imgs, resource_distance=1):
       self.name = name
@@ -51,6 +57,9 @@ class Vein:
 
    def set_position(self, point):
       self.position = point
+   
+   def get_position(self):
+      return self.position
 
 class Ore:
    def __init__(self, name, position, imgs, rate=5000):
@@ -63,6 +72,9 @@ class Ore:
 
    def set_position(self, point):
       self.position = point
+
+   def get_position(self):
+      return self.position
 
 class Blacksmith:
    def __init__(self, name, position, imgs, resource_limit, rate,
@@ -80,6 +92,9 @@ class Blacksmith:
    def set_position(self, point):
       self.position = point
 
+   def get_position(self):
+      return self.position
+
 class Obstacle:
    def __init__(self, name, position, imgs):
       self.name = name
@@ -89,6 +104,9 @@ class Obstacle:
 
    def set_position(self, point):
       self.position = point
+
+   def get_position(self):
+      return self.position
 
 class OreBlob:
    def __init__(self, name, position, rate, imgs, animation_rate):
@@ -103,6 +121,9 @@ class OreBlob:
    def set_position(self, point):
       self.position = point
 
+   def get_position(self):
+      return self.position
+
 class Quake:
    def __init__(self, name, position, imgs, animation_rate):
       self.name = name
@@ -115,11 +136,14 @@ class Quake:
    def set_position(self, point):
       self.position = point
 
+   def get_position(self):
+      return self.position
+
 '''def set_position(entity, point):
    entity.position = point'''
 
-def get_position(entity):
-   return entity.position
+'''def get_position(entity):
+   return entity.position'''
 
 
 def get_images(entity):
