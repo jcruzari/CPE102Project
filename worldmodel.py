@@ -67,7 +67,7 @@ def move_entity(world, entity, pt):
       tiles.append(old_pt)
       occ_grid.set_cell(world.occupancy, pt, entity)
       tiles.append(pt)
-      entities.set_position(entity, pt)
+      entity.set_position(pt)
 
    return tiles
 
@@ -80,7 +80,7 @@ def remove_entity_at(world, pt):
    if (within_bounds(world, pt) and
       occ_grid.get_cell(world.occupancy, pt) != None):
       entity = occ_grid.get_cell(world.occupancy, pt)
-      entities.set_position(entity, point.Point(-1, -1))
+      entity.set_position(point.Point(-1, -1))
       world.entities.remove(entity)
       occ_grid.set_cell(world.occupancy, pt, None)
 
