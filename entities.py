@@ -35,6 +35,9 @@ class MinerNotFull:
    def get_rate(self):
       return self.rate
 
+   def get_resource_limit(self):
+      return self.resource_limit
+
 class MinerFull:
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
@@ -59,6 +62,9 @@ class MinerFull:
 
    def get_rate(self):
       return self.rate
+
+   def get_resource_limit(self):
+      return self.resource_limit
 
 class Vein:
    def __init__(self, name, rate, position, imgs, resource_distance=1):
@@ -209,8 +215,8 @@ def get_resource_count(entity):
    return entity.resource_count
 
 
-def get_resource_limit(entity):
-   return entity.resource_limit
+'''def get_resource_limit(entity):
+   return entity.resource_limit'''
 
 
 def get_resource_distance(entity):

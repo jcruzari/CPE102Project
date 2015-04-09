@@ -214,7 +214,7 @@ def create_vein_action(world, entity, i_store):
 
 def try_transform_miner_full(world, entity):
    new_entity = entities.MinerNotFull(
-      entities.get_name(entity), entities.get_resource_limit(entity),
+      entities.get_name(entity), entity.get_resource_limit(),
       entity.get_position(), entity.get_rate(),
       entity.get_images(), entities.get_animation_rate(entity))
 
@@ -226,7 +226,7 @@ def try_transform_miner_not_full(world, entity):
       return entity
    else:
       new_entity = entities.MinerFull(
-         entities.get_name(entity), entities.get_resource_limit(entity),
+         entities.get_name(entity), entity.get_resource_limit(),
          entity.get_position(), entity.get_rate(),
          entity.get_images(), entities.get_animation_rate(entity))
       return new_entity
