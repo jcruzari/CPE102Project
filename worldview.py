@@ -95,7 +95,7 @@ def update_tile(view, view_tile_pt, surface):
 def get_tile_image(view, view_tile_pt):
    pt = viewport_to_world(view.viewport, view_tile_pt)
    bgnd = view.world.get_background_image(pt)
-   occupant = worldmodel.get_tile_occupant(view.world, pt)
+   occupant = view.world.get_tile_occupant(pt)
    if occupant:
       img = pygame.Surface((view.tile_width, view.tile_height))
       img.blit(bgnd, (0, 0))

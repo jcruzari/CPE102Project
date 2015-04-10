@@ -56,13 +56,13 @@ def blob_next_position(world, entity_pt, dest_pt):
    new_pt = point.Point(entity_pt.x + horiz, entity_pt.y)
 
    if horiz == 0 or (world.is_occupied(new_pt) and
-      not isinstance(worldmodel.get_tile_occupant(world, new_pt),
+      not isinstance(world.get_tile_occupant(new_pt),
       entities.Ore)):
       vert = sign(dest_pt.y - entity_pt.y)
       new_pt = point.Point(entity_pt.x, entity_pt.y + vert)
 
       if vert == 0 or (world.is_occupied(new_pt) and
-         not isinstance(worldmodel.get_tile_occupant(world, new_pt),
+         not isinstance(world.get_tile_occupant(new_pt),
          entities.Ore)):
          new_pt = point.Point(entity_pt.x, entity_pt.y)
 
@@ -150,7 +150,7 @@ def blob_to_vein(world, entity, vein):
       return ([vein_pt], True)
    else:
       new_pt = blob_next_position(world, entity_pt, vein_pt)
-      old_entity = worldmodel.get_tile_occupant(world, new_pt)
+      old_entity = world.get_tile_occupant(new_pt)
       if isinstance(old_entity, entities.Ore):
          remove_entity(world, old_entity)
       return (world.move_entity(entity, new_pt), False)

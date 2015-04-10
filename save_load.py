@@ -57,7 +57,7 @@ def save_world(world, file):
    save_background(world, file)
 
 def save_entities(world, file):
-   for entity in worldmodel.get_entities(world):
+   for entity in world.get_entities():
       file.write(entities.entity_string(entity) + '\n')
 
 

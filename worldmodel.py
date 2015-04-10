@@ -89,6 +89,13 @@ class WorldModel:
       if self.within_bounds(pt):
          occ_grid.set_cell(self.background, pt, bgnd)
 
+   def get_tile_occupant(self, pt):
+      if self.within_bounds(pt):
+         return occ_grid.get_cell(self.occupancy, pt)
+
+   def get_entities(self):
+      return self.entities
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -195,10 +202,10 @@ def distance_sq(p1, p2):
       occ_grid.set_cell(world.background, pt, bgnd)'''
 
 
-def get_tile_occupant(world, pt):
+'''def get_tile_occupant(world, pt):
    if world.within_bounds(pt):
-      return occ_grid.get_cell(world.occupancy, pt)
+      return occ_grid.get_cell(world.occupancy, pt)'''
 
 
-def get_entities(world):
-   return world.entities
+'''def get_entities(world):
+   return world.entities'''
