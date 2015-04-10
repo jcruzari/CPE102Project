@@ -291,7 +291,7 @@ def create_ore_transform_action(world, entity, i_store):
 
 def remove_entity(world, entity):
    for action in entities.get_pending_actions(entity):
-      worldmodel.unschedule_action(world, action)
+      world.unschedule_action(action)
    entities.clear_pending_actions(entity)
    world.remove_entity(entity)
 
@@ -358,7 +358,7 @@ def schedule_vein(world, vein, ticks, i_store):
 
 def schedule_action(world, entity, action, time):
    entities.add_pending_action(entity, action)
-   worldmodel.schedule_action(world, action, time)
+   world.schedule_action(action, time)
 
 
 def schedule_animation(world, entity, repeat_count=0):
@@ -369,5 +369,5 @@ def schedule_animation(world, entity, repeat_count=0):
 
 def clear_pending_actions(world, entity):
    for action in entities.get_pending_actions(entity):
-      worldmodel.unschedule_action(world, action)
+      world.unschedule_action(action)
    entities.clear_pending_actions(entity)

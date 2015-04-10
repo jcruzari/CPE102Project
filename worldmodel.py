@@ -60,6 +60,12 @@ class WorldModel:
          self.entities.remove(entity)
          occ_grid.set_cell(self.occupancy, pt, None)
 
+   def schedule_action(self, action, time):
+      self.action_queue.insert(action, time)
+
+   def unschedule_action(self, action):
+      self.action_queue.remove(action)
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -131,8 +137,8 @@ def distance_sq(p1, p2):
       occ_grid.set_cell(world.occupancy, pt, None)'''
 
 
-def schedule_action(world, action, time):
-   world.action_queue.insert(action, time)
+'''def schedule_action(world, action, time):
+   world.action_queue.insert(action, time)'''
 
 
 def unschedule_action(world, action):
