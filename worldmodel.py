@@ -66,6 +66,21 @@ class WorldModel:
    def unschedule_action(self, action):
       self.action_queue.remove(action)
 
+   def update_on_time(self, ticks):
+      tiles = []
+
+      next = self.action_queue.head()
+      while next and next.ord < ticks:
+         self.action_queue.pop()
+         tiles.extend(next.item(ticks))  # invoke action function
+         next = self.action_queue.head()
+
+      return tiles
+
+   def get_background_image(self, pt):
+      if self.within_bounds(pt):
+        return entities.get_image(occ_grid.get_cell(self.background, pt))
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -141,11 +156,11 @@ def distance_sq(p1, p2):
    world.action_queue.insert(action, time)'''
 
 
-def unschedule_action(world, action):
-   world.action_queue.remove(action)
+'''def unschedule_action(world, action):
+   world.action_queue.remove(action)'''
 
 
-def update_on_time(world, ticks):
+'''def update_on_time(world, ticks):
    tiles = []
 
    next = world.action_queue.head()
@@ -154,12 +169,12 @@ def update_on_time(world, ticks):
       tiles.extend(next.item(ticks))  # invoke action function
       next = world.action_queue.head()
 
-   return tiles
+   return tiles'''
 
 
-def get_background_image(world, pt):
+'''def get_background_image(world, pt):
    if world.within_bounds(pt):
-      return entities.get_image(occ_grid.get_cell(world.background, pt))
+      return entities.get_image(occ_grid.get_cell(world.background, pt))'''
 
 
 def get_background(world, pt):
