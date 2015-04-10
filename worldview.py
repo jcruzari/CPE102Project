@@ -26,6 +26,12 @@ class WorldView:
    def world_to_viewport(self, pt):
       return point.Point(pt.x - self.viewport.left, pt.y - self.viewport.top)
 
+   def create_shifted_viewport(self, delta, num_rows, num_cols):
+      new_x = clamp(self.viewport.left + delta[0], 0, num_cols - self.viewport.width)
+      new_y = clamp(self.viewport.top + delta[1], 0, num_rows - self.viewport.height)
+
+      return pygame.Rect(new_x, new_y, self.viewport.width, self.viewport.height)
+
 '''def viewport_to_world(viewport, pt):
    return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
 
@@ -38,11 +44,11 @@ def clamp(v, low, high):
    return min(high, max(v, low))
 
 
-def create_shifted_viewport(viewport, delta, num_rows, num_cols):
+'''def create_shifted_viewport(viewport, delta, num_rows, num_cols):
    new_x = clamp(viewport.left + delta[0], 0, num_cols - viewport.width)
    new_y = clamp(viewport.top + delta[1], 0, num_rows - viewport.height)
 
-   return pygame.Rect(new_x, new_y, viewport.width, viewport.height)
+   return pygame.Rect(new_x, new_y, viewport.width, viewport.height)'''
 
 
 def draw_background(view):
@@ -67,7 +73,7 @@ def draw_viewport(view):
 
 
 def update_view(view, view_delta=(0,0), mouse_img=None):
-   view.viewport = create_shifted_viewport(view.viewport, view_delta,
+   view.viewport = view.create_shifted_viewport(view_delta,
       view.num_rows, view.num_cols)
    view.mouse_img = mouse_img
    draw_viewport(view)
