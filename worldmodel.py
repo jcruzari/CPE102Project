@@ -81,6 +81,14 @@ class WorldModel:
       if self.within_bounds(pt):
         return entities.get_image(occ_grid.get_cell(self.background, pt))
 
+   def get_background(self, pt):
+      if self.within_bounds(pt):
+         return occ_grid.get_cell(self.background, pt)
+
+   def set_background(self, pt, bgnd):
+      if self.within_bounds(pt):
+         occ_grid.set_cell(self.background, pt, bgnd)
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -177,14 +185,14 @@ def distance_sq(p1, p2):
       return entities.get_image(occ_grid.get_cell(world.background, pt))'''
 
 
-def get_background(world, pt):
+'''def get_background(world, pt):
    if world.within_bounds(pt):
-      return occ_grid.get_cell(world.background, pt)
+      return occ_grid.get_cell(world.background, pt)'''
 
 
-def set_background(world, pt, bgnd):
+'''def set_background(world, pt, bgnd):
    if world.within_bounds(pt):
-      occ_grid.set_cell(world.background, pt, bgnd)
+      occ_grid.set_cell(world.background, pt, bgnd)'''
 
 
 def get_tile_occupant(world, pt):
