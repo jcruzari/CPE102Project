@@ -115,7 +115,7 @@ def handle_mouse_button(view, world, event, entity_select, i_store):
             world.add_entity(new_entity)
             return [tile_view_pt]
    elif event.button == mouse_buttons.RIGHT:
-      worldmodel.remove_entity_at(world, tile_view_pt)
+      world.remove_entity_at(tile_view_pt)
       return [tile_view_pt]
 
    return []

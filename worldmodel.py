@@ -50,7 +50,15 @@ class WorldModel:
       return tiles
 
    def remove_entity(self, entity):
-      remove_entity_at(self.entity.get_position())
+      self.remove_entity_at(entity.get_position())
+
+   def remove_entity_at(self, pt):
+      if (self.within_bounds(pt) and
+         occ_grid.get_cell(self.occupancy, pt) != None):
+         entity = occ_grid.get_cell(self.occupancy, pt)
+         entity.set_position(point.Point(-1, -1))
+         self.entities.remove(entity)
+         occ_grid.set_cell(self.occupancy, pt, None)
 
 
 '''def within_bounds(world, pt):
@@ -114,13 +122,13 @@ def distance_sq(p1, p2):
    remove_entity_at(world, entity.get_position())'''
 
 
-def remove_entity_at(world, pt):
+'''def remove_entity_at(world, pt):
    if (world.within_bounds(pt) and
       occ_grid.get_cell(world.occupancy, pt) != None):
       entity = occ_grid.get_cell(world.occupancy, pt)
       entity.set_position(point.Point(-1, -1))
       world.entities.remove(entity)
-      occ_grid.set_cell(world.occupancy, pt, None)
+      occ_grid.set_cell(world.occupancy, pt, None)'''
 
 
 def schedule_action(world, action, time):
