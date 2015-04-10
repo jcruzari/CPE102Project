@@ -81,7 +81,7 @@ def miner_to_ore(world, entity, ore):
       return ([ore_pt], True)
    else:
       new_pt = next_position(world, entity_pt, ore_pt)
-      return (worldmodel.move_entity(world, entity, new_pt), False)
+      return (world.move_entity(entity, new_pt), False)
 
 
 def miner_to_smith(world, entity, smith):
@@ -97,7 +97,7 @@ def miner_to_smith(world, entity, smith):
       return ([], True)
    else:
       new_pt = next_position(world, entity_pt, smith_pt)
-      return (worldmodel.move_entity(world, entity, new_pt), False)
+      return (world.move_entity(entity, new_pt), False)
 
 
 def create_miner_not_full_action(world, entity, i_store):
@@ -153,7 +153,7 @@ def blob_to_vein(world, entity, vein):
       old_entity = worldmodel.get_tile_occupant(world, new_pt)
       if isinstance(old_entity, entities.Ore):
          remove_entity(world, old_entity)
-      return (worldmodel.move_entity(world, entity, new_pt), False)
+      return (world.move_entity(entity, new_pt), False)
 
 
 def create_ore_blob_action(world, entity, i_store):

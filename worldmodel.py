@@ -37,6 +37,18 @@ class WorldModel:
          occ_grid.set_cell(self.occupancy, pt, entity)
          self.entities.append(entity)
 
+   def move_entity(self, entity, pt):
+      tiles = []
+      if self.within_bounds(pt):
+         old_pt = entity.get_position()
+         occ_grid.set_cell(self.occupancy, old_pt, None)
+         tiles.append(old_pt)
+         occ_grid.set_cell(self.occupancy, pt, entity)
+         tiles.append(pt)
+         entity.set_position(pt)
+
+      return tiles
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -82,7 +94,7 @@ def distance_sq(p1, p2):
       world.entities.append(entity)'''
 
 
-def move_entity(world, entity, pt):
+'''def move_entity(world, entity, pt):
    tiles = []
    if world.within_bounds(pt):
       old_pt = entity.get_position()
@@ -92,7 +104,7 @@ def move_entity(world, entity, pt):
       tiles.append(pt)
       entity.set_position(pt)
 
-   return tiles
+   return tiles'''
 
 
 def remove_entity(world, entity):
