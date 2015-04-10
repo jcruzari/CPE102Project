@@ -183,7 +183,7 @@ def find_open_around(world, pt, distance):
       for dx in range(-distance, distance + 1):
          new_pt = point.Point(pt.x + dx, pt.y + dy)
 
-         if (worldmodel.within_bounds(world, new_pt) and
+         if (world.within_bounds(new_pt) and
             (not worldmodel.is_occupied(world, new_pt))):
             return new_pt
 
