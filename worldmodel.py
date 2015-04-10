@@ -28,6 +28,15 @@ class WorldModel:
 
       return nearest_entity(oftype)
 
+   def add_entity(self, entity):
+      pt = entity.get_position()
+      if self.within_bounds(pt):
+         old_entity = occ_grid.get_cell(self.occupancy, pt)
+         if old_entity != None:
+            entities.clear_pending_actions(old_entity)
+         occ_grid.set_cell(self.occupancy, pt, entity)
+         self.entities.append(entity)
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -63,14 +72,14 @@ def distance_sq(p1, p2):
    return nearest_entity(oftype)'''
 
 
-def add_entity(world, entity):
+'''def add_entity(world, entity):
    pt = entity.get_position()
    if world.within_bounds(pt):
       old_entity = occ_grid.get_cell(world.occupancy, pt)
       if old_entity != None:
          entities.clear_pending_actions(old_entity)
       occ_grid.set_cell(world.occupancy, pt, entity)
-      world.entities.append(entity)
+      world.entities.append(entity)'''
 
 
 def move_entity(world, entity, pt):

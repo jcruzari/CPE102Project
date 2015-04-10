@@ -91,7 +91,7 @@ def add_background(world, properties, i_store):
 def add_entity(world, properties, i_store, run):
    new_entity = create_from_properties(properties, i_store)
    if new_entity:
-      worldmodel.add_entity(world, new_entity)
+      world.add_entity(new_entity)
       if run:
          schedule_entity(world, new_entity, i_store)
 

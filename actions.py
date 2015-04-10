@@ -167,7 +167,7 @@ def create_ore_blob_action(world, entity, i_store):
       next_time = current_ticks + entity.get_rate()
       if found:
          quake = create_quake(world, tiles[0], current_ticks, i_store)
-         worldmodel.add_entity(world, quake)
+         world.add_entity(quake)
          next_time = current_ticks + entity.get_rate() * 2
 
       schedule_action(world, entity,
@@ -200,7 +200,7 @@ def create_vein_action(world, entity, i_store):
          ore = create_ore(world,
             "ore - " + entity.get_name() + " - " + str(current_ticks),
             open_pt, current_ticks, i_store)
-         worldmodel.add_entity(world, ore)
+         world.add_entity(ore)
          tiles = [open_pt]
       else:
          tiles = []
@@ -237,7 +237,7 @@ def try_transform_miner(world, entity, transform):
    if entity != new_entity:
       clear_pending_actions(world, entity)
       worldmodel.remove_entity_at(world, entity.get_position())
-      worldmodel.add_entity(world, new_entity)
+      world.add_entity(new_entity)
       schedule_animation(world, new_entity)
 
    return new_entity
@@ -283,7 +283,7 @@ def create_ore_transform_action(world, entity, i_store):
          current_ticks, i_store)
 
       remove_entity(world, entity)
-      worldmodel.add_entity(world, blob)
+      world.add_entity(blob)
 
       return [blob.get_position()]
    return action
