@@ -20,9 +20,11 @@ class WorldView:
       self.num_cols = world.num_cols
       self.mouse_img = mouse_img
 
+   def viewport_to_world(self, pt):
+      return point.Point(pt.x + self.viewport.left, pt.y + self.viewport.top)
 
-def viewport_to_world(viewport, pt):
-   return point.Point(pt.x + viewport.left, pt.y + viewport.top)
+'''def viewport_to_world(viewport, pt):
+   return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
 
 
 def world_to_viewport(viewport, pt):
@@ -43,7 +45,7 @@ def create_shifted_viewport(viewport, delta, num_rows, num_cols):
 def draw_background(view):
    for y in range(0, view.viewport.height):
       for x in range(0, view.viewport.width):
-         w_pt = viewport_to_world(view.viewport, point.Point(x, y))
+         w_pt = view.viewport_to_world(point.Point(x, y))
          img = view.world.get_background_image(w_pt)
          view.screen.blit(img, (x * view.tile_width, y * view.tile_height))
 
@@ -93,7 +95,7 @@ def update_tile(view, view_tile_pt, surface):
 
 
 def get_tile_image(view, view_tile_pt):
-   pt = viewport_to_world(view.viewport, view_tile_pt)
+   pt = view.viewport_to_world(view_tile_pt)
    bgnd = view.world.get_background_image(pt)
    occupant = view.world.get_tile_occupant(pt)
    if occupant:
@@ -122,7 +124,7 @@ def update_mouse_cursor(view):
    return update_tile(view, view.mouse_pt,
       create_mouse_surface(view,
          view.world.is_occupied(
-            viewport_to_world(view.viewport, view.mouse_pt))))
+            view.viewport_to_world(view.mouse_pt))))
 
 
 def mouse_move(view, new_mouse_pt):

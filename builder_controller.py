@@ -101,7 +101,7 @@ def is_background_tile(entity_select):
 
 def handle_mouse_button(view, world, event, entity_select, i_store):
    mouse_pt = mouse_to_tile(event.pos, view.tile_width, view.tile_height)
-   tile_view_pt = worldview.viewport_to_world(view.viewport, mouse_pt)
+   tile_view_pt = view.viewport_to_world(mouse_pt)
    if event.button == mouse_buttons.LEFT and entity_select:
       if is_background_tile(entity_select):
          world.set_background(tile_view_pt,
