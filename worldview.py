@@ -23,12 +23,15 @@ class WorldView:
    def viewport_to_world(self, pt):
       return point.Point(pt.x + self.viewport.left, pt.y + self.viewport.top)
 
+   def world_to_viewport(self, pt):
+      return point.Point(pt.x - self.viewport.left, pt.y - self.viewport.top)
+
 '''def viewport_to_world(viewport, pt):
    return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
 
 
-def world_to_viewport(viewport, pt):
-   return point.Point(pt.x - viewport.left, pt.y - viewport.top)
+'''def world_to_viewport(viewport, pt):
+   return point.Point(pt.x - viewport.left, pt.y - viewport.top)'''
 
 
 def clamp(v, low, high):
@@ -53,7 +56,7 @@ def draw_background(view):
 def draw_entities(view):
    for entity in view.world.entities:
       if view.viewport.collidepoint(entity.position.x, entity.position.y):
-         v_pt = world_to_viewport(view.viewport, entity.position)
+         v_pt = view.world_to_viewport(entity.position)
          view.screen.blit(entities.get_image(entity),
             (v_pt.x * view.tile_width, v_pt.y * view.tile_height))
 
@@ -76,7 +79,7 @@ def update_view_tiles(view, tiles):
    rects = []
    for tile in tiles:
       if view.viewport.collidepoint(tile.x, tile.y):
-         v_pt = world_to_viewport(view.viewport, tile)
+         v_pt = view.world_to_viewport(tile)
          img = get_tile_image(view, v_pt)
          rects.append(update_tile(view, v_pt, img))
          if view.mouse_pt.x == v_pt.x and view.mouse_pt.y == v_pt.y:
