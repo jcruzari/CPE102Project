@@ -46,6 +46,18 @@ class WorldView:
             self.screen.blit(entities.get_image(entity),
                (v_pt.x * self.tile_width, v_pt.y * self.tile_height))
 
+   def draw_viewport(self):
+      self.draw_background()
+      self.draw_entities()
+
+   def update_view(self, view_delta=(0,0), mouse_img=None):
+      self.viewport = self.create_shifted_viewport(view_delta,
+         self.num_rows, self.num_cols)
+      self.mouse_img = mouse_img
+      self.draw_viewport()
+      pygame.display.update()
+      mouse_move(self, self.mouse_pt)
+
 '''def viewport_to_world(viewport, pt):
    return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
 
@@ -81,18 +93,18 @@ def clamp(v, low, high):
             (v_pt.x * view.tile_width, v_pt.y * view.tile_height))'''
 
 
-def draw_viewport(view):
+'''def draw_viewport(view):
    view.draw_background()
-   view.draw_entities()
+   view.draw_entities()'''
 
 
-def update_view(view, view_delta=(0,0), mouse_img=None):
+'''def update_view(view, view_delta=(0,0), mouse_img=None):
    view.viewport = view.create_shifted_viewport(view_delta,
       view.num_rows, view.num_cols)
    view.mouse_img = mouse_img
-   draw_viewport(view)
+   view.draw_viewport()
    pygame.display.update()
-   mouse_move(view, view.mouse_pt)
+   mouse_move(view, view.mouse_pt)'''
 
 
 def update_view_tiles(view, tiles):
