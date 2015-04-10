@@ -9,6 +9,9 @@ class Background:
    def get_images(self):
       return self.imgs
 
+   def get_name(self):
+      return self.name
+
 
 class MinerNotFull:
    def __init__(self, name, resource_limit, position, rate, imgs,
@@ -38,6 +41,9 @@ class MinerNotFull:
    def get_resource_limit(self):
       return self.resource_limit
 
+   def get_name(self):
+      return self.name
+
 class MinerFull:
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
@@ -66,6 +72,9 @@ class MinerFull:
    def get_resource_limit(self):
       return self.resource_limit
 
+   def get_name(self):
+      return self.name
+
 class Vein:
    def __init__(self, name, rate, position, imgs, resource_distance=1):
       self.name = name
@@ -91,6 +100,9 @@ class Vein:
    def get_resource_distance(self):
       return self.resource_distance
 
+   def get_name(self):
+      return self.name
+
 class Ore:
    def __init__(self, name, position, imgs, rate=5000):
       self.name = name
@@ -111,6 +123,9 @@ class Ore:
 
    def get_rate(self):
       return self.rate
+
+   def get_name(self):
+      return self.name
 
 class Blacksmith:
    def __init__(self, name, position, imgs, resource_limit, rate,
@@ -137,6 +152,9 @@ class Blacksmith:
    def get_rate(self):
       return self.rate
 
+   def get_name(self):
+      return self.name
+
 class Obstacle:
    def __init__(self, name, position, imgs):
       self.name = name
@@ -152,6 +170,9 @@ class Obstacle:
 
    def get_images(self):
       return self.imgs
+
+   def get_name(self):
+      return self.name
 
 class OreBlob:
    def __init__(self, name, position, rate, imgs, animation_rate):
@@ -175,6 +196,9 @@ class OreBlob:
    def get_rate(self):
       return self.rate
 
+   def get_name(self):
+      return self.name
+
 class Quake:
    def __init__(self, name, position, imgs, animation_rate):
       self.name = name
@@ -192,6 +216,9 @@ class Quake:
 
    def get_images(self):
       return self.imgs
+
+   def get_name(self):
+      return self.name
 
 '''def set_position(entity, point):
    entity.position = point'''
@@ -226,8 +253,8 @@ def get_resource_count(entity):
    return entity.resource_distance'''
 
 
-def get_name(entity):
-   return entity.name
+'''def get_name(entity):
+   return entity.name'''
 
 
 def get_animation_rate(entity):
