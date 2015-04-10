@@ -105,7 +105,7 @@ def create_miner_not_full_action(world, entity, i_store):
       entities.remove_pending_action(entity, action)
 
       entity_pt = entity.get_position()
-      ore = worldmodel.find_nearest(world, entity_pt, entities.Ore)
+      ore = world.find_nearest(entity_pt, entities.Ore)
       (tiles, found) = miner_to_ore(world, entity, ore)
 
       new_entity = entity
@@ -125,7 +125,7 @@ def create_miner_full_action(world, entity, i_store):
       entities.remove_pending_action(entity, action)
 
       entity_pt = entity.get_position()
-      smith = worldmodel.find_nearest(world, entity_pt, entities.Blacksmith)
+      smith = world.find_nearest(entity_pt, entities.Blacksmith)
       (tiles, found) = miner_to_smith(world, entity, smith)
 
       new_entity = entity
@@ -161,7 +161,7 @@ def create_ore_blob_action(world, entity, i_store):
       entities.remove_pending_action(entity, action)
 
       entity_pt = entity.get_position()
-      vein = worldmodel.find_nearest(world, entity_pt, entities.Vein)
+      vein = world.find_nearest(entity_pt, entities.Vein)
       (tiles, found) = blob_to_vein(world, entity, vein)
 
       next_time = current_ticks + entity.get_rate()

@@ -22,6 +22,12 @@ class WorldModel:
       return (self.within_bounds(pt) and
          occ_grid.get_cell(self.occupancy, pt) != None)
 
+   def find_nearest(self, pt, type):
+      oftype = [(e, distance_sq(pt, e.get_position()))
+         for e in self.entities if isinstance(e, type)]
+
+      return nearest_entity(oftype)
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -50,11 +56,11 @@ def distance_sq(p1, p2):
    return (p1.x - p2.x)**2 + (p1.y - p2.y)**2
 
 
-def find_nearest(world, pt, type):
+'''def find_nearest(world, pt, type):
    oftype = [(e, distance_sq(pt, e.get_position()))
       for e in world.entities if isinstance(e, type)]
 
-   return nearest_entity(oftype)
+   return nearest_entity(oftype)'''
 
 
 def add_entity(world, entity):
