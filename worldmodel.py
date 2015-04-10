@@ -49,6 +49,9 @@ class WorldModel:
 
       return tiles
 
+   def remove_entity(self, entity):
+      remove_entity_at(self.entity.get_position())
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
@@ -107,8 +110,8 @@ def distance_sq(p1, p2):
    return tiles'''
 
 
-def remove_entity(world, entity):
-   remove_entity_at(world, entity.get_position())
+'''def remove_entity(world, entity):
+   remove_entity_at(world, entity.get_position())'''
 
 
 def remove_entity_at(world, pt):

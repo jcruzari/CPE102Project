@@ -236,7 +236,7 @@ def try_transform_miner(world, entity, transform):
    new_entity = transform(world, entity)
    if entity != new_entity:
       clear_pending_actions(world, entity)
-      worldmodel.remove_entity_at(world, entity.get_position())
+      world.remove_entity_at(entity.get_position())
       world.add_entity(new_entity)
       schedule_animation(world, new_entity)
 
@@ -293,7 +293,7 @@ def remove_entity(world, entity):
    for action in entities.get_pending_actions(entity):
       worldmodel.unschedule_action(world, action)
    entities.clear_pending_actions(entity)
-   worldmodel.remove_entity(world, entity)
+   world.remove_entity(entity)
 
 
 def create_blob(world, name, pt, rate, ticks, i_store):
