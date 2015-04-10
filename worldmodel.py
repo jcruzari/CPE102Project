@@ -18,15 +18,19 @@ class WorldModel:
       return (pt.x >= 0 and pt.x < self.num_cols and
          pt.y >= 0 and pt.y < self.num_rows)
 
+   def is_occupied(self, pt):
+      return (self.within_bounds(pt) and
+         occ_grid.get_cell(self.occupancy, pt) != None)
+
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and
       pt.y >= 0 and pt.y < world.num_rows)'''
 
 
-def is_occupied(world, pt):
+'''def is_occupied(world, pt):
    return (world.within_bounds(pt) and
-      occ_grid.get_cell(world.occupancy, pt) != None)
+      occ_grid.get_cell(world.occupancy, pt) != None)'''
 
 
 def nearest_entity(entity_dists):

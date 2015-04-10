@@ -121,7 +121,7 @@ def create_mouse_surface(view, occupied):
 def update_mouse_cursor(view):
    return update_tile(view, view.mouse_pt,
       create_mouse_surface(view,
-         worldmodel.is_occupied(view.world,
+         view.world.is_occupied(
             viewport_to_world(view.viewport, view.mouse_pt))))
 
 
