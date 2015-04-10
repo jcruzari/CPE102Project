@@ -88,6 +88,9 @@ class Vein:
    def get_rate(self):
       return self.rate
 
+   def get_resource_distance(self):
+      return self.resource_distance
+
 class Ore:
    def __init__(self, name, position, imgs, rate=5000):
       self.name = name
@@ -219,8 +222,8 @@ def get_resource_count(entity):
    return entity.resource_limit'''
 
 
-def get_resource_distance(entity):
-   return entity.resource_distance
+'''def get_resource_distance(entity):
+   return entity.resource_distance'''
 
 
 def get_name(entity):

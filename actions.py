@@ -195,7 +195,7 @@ def create_vein_action(world, entity, i_store):
       entities.remove_pending_action(entity, action)
 
       open_pt = find_open_around(world, entity.get_position(),
-         entities.get_resource_distance(entity))
+         entity.get_resource_distance())
       if open_pt:
          ore = create_ore(world,
             "ore - " + entities.get_name(entity) + " - " + str(current_ticks),
