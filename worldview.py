@@ -32,6 +32,20 @@ class WorldView:
 
       return pygame.Rect(new_x, new_y, self.viewport.width, self.viewport.height)
 
+   def draw_background(self):
+      for y in range(0, self.viewport.height):
+         for x in range(0, self.viewport.width):
+            w_pt = self.viewport_to_world(point.Point(x, y))
+            img = self.world.get_background_image(w_pt)
+            self.screen.blit(img, (x * self.tile_width, y * self.tile_height))
+
+   def draw_entities(self):
+      for entity in self.world.entities:
+         if self.viewport.collidepoint(entity.position.x, entity.position.y):
+            v_pt = self.world_to_viewport(entity.position)
+            self.screen.blit(entities.get_image(entity),
+               (v_pt.x * self.tile_width, v_pt.y * self.tile_height))
+
 '''def viewport_to_world(viewport, pt):
    return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
 
@@ -51,25 +65,25 @@ def clamp(v, low, high):
    return pygame.Rect(new_x, new_y, viewport.width, viewport.height)'''
 
 
-def draw_background(view):
+'''def draw_background(view):
    for y in range(0, view.viewport.height):
       for x in range(0, view.viewport.width):
          w_pt = view.viewport_to_world(point.Point(x, y))
          img = view.world.get_background_image(w_pt)
-         view.screen.blit(img, (x * view.tile_width, y * view.tile_height))
+         view.screen.blit(img, (x * view.tile_width, y * view.tile_height))'''
 
 
-def draw_entities(view):
+'''def draw_entities(view):
    for entity in view.world.entities:
       if view.viewport.collidepoint(entity.position.x, entity.position.y):
          v_pt = view.world_to_viewport(entity.position)
          view.screen.blit(entities.get_image(entity),
-            (v_pt.x * view.tile_width, v_pt.y * view.tile_height))
+            (v_pt.x * view.tile_width, v_pt.y * view.tile_height))'''
 
 
 def draw_viewport(view):
-   draw_background(view)
-   draw_entities(view)
+   view.draw_background()
+   view.draw_entities()
 
 
 def update_view(view, view_delta=(0,0), mouse_img=None):
