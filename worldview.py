@@ -58,6 +58,18 @@ class WorldView:
       pygame.display.update()
       mouse_move(self, self.mouse_pt)
 
+   def update_view_tiles(self, tiles):
+      rects = []
+      for tile in tiles:
+         if self.viewport.collidepoint(tile.x, tile.y):
+            v_pt = self.world_to_viewport(tile)
+            img = get_tile_image(self, v_pt)
+            rects.append(update_tile(self, v_pt, img))
+            if self.mouse_pt.x == v_pt.x and self.mouse_pt.y == v_pt.y:
+               rects.append(update_mouse_cursor(self))
+
+      pygame.display.update(rects)
+
 '''def viewport_to_world(viewport, pt):
    return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
 
@@ -107,7 +119,7 @@ def clamp(v, low, high):
    mouse_move(view, view.mouse_pt)'''
 
 
-def update_view_tiles(view, tiles):
+'''def update_view_tiles(view, tiles):
    rects = []
    for tile in tiles:
       if view.viewport.collidepoint(tile.x, tile.y):
@@ -117,7 +129,7 @@ def update_view_tiles(view, tiles):
          if view.mouse_pt.x == v_pt.x and view.mouse_pt.y == v_pt.y:
             rects.append(update_mouse_cursor(view))
 
-   pygame.display.update(rects)
+   pygame.display.update(rects)'''
 
 
 def update_tile(view, view_tile_pt, surface):
