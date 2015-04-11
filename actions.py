@@ -37,7 +37,7 @@ def adjacent(pt1, pt2):
       (pt1.y == pt2.y and abs(pt1.x - pt2.x) == 1))
 
 
-def next_position(world, entity_pt, dest_pt):
+'''def next_position(world, entity_pt, dest_pt):
    horiz = sign(dest_pt.x - entity_pt.x)
    new_pt = point.Point(entity_pt.x + horiz, entity_pt.y)
 
@@ -48,10 +48,10 @@ def next_position(world, entity_pt, dest_pt):
       if vert == 0 or world.is_occupied(new_pt):
          new_pt = point.Point(entity_pt.x, entity_pt.y)
 
-   return new_pt
+   return new_pt'''
 
 
-def blob_next_position(world, entity_pt, dest_pt):
+'''def blob_next_position(world, entity_pt, dest_pt):
    horiz = sign(dest_pt.x - entity_pt.x)
    new_pt = point.Point(entity_pt.x + horiz, entity_pt.y)
 
@@ -66,10 +66,10 @@ def blob_next_position(world, entity_pt, dest_pt):
          entities.Ore)):
          new_pt = point.Point(entity_pt.x, entity_pt.y)
 
-   return new_pt
+   return new_pt'''
 
 
-def miner_to_ore(world, entity, ore):
+'''def miner_to_ore(world, entity, ore):
    entity_pt = entity.get_position()
    if not ore:
       return ([entity_pt], False)
@@ -80,11 +80,11 @@ def miner_to_ore(world, entity, ore):
       remove_entity(world, ore)
       return ([ore_pt], True)
    else:
-      new_pt = next_position(world, entity_pt, ore_pt)
-      return (world.move_entity(entity, new_pt), False)
+      new_pt = world.next_position(entity_pt, ore_pt)
+      return (world.move_entity(entity, new_pt), False)'''
 
 
-def miner_to_smith(world, entity, smith):
+'''def miner_to_smith(world, entity, smith):
    entity_pt = entity.get_position()
    if not smith:
       return ([entity_pt], False)
@@ -96,17 +96,17 @@ def miner_to_smith(world, entity, smith):
       entities.set_resource_count(entity, 0)
       return ([], True)
    else:
-      new_pt = next_position(world, entity_pt, smith_pt)
-      return (world.move_entity(entity, new_pt), False)
+      new_pt = world.next_position(entity_pt, smith_pt)
+      return (world.move_entity(entity, new_pt), False)'''
 
 
-def create_miner_not_full_action(world, entity, i_store):
+'''def create_miner_not_full_action(world, entity, i_store):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
 
       entity_pt = entity.get_position()
       ore = world.find_nearest(entity_pt, entities.Ore)
-      (tiles, found) = miner_to_ore(world, entity, ore)
+      (tiles, found) = world.miner_to_ore(entity, ore)
 
       new_entity = entity
       if found:
@@ -117,16 +117,16 @@ def create_miner_not_full_action(world, entity, i_store):
          create_miner_action(world, new_entity, i_store),
          current_ticks + new_entity.get_rate())
       return tiles
-   return action
+   return action'''
 
 
-def create_miner_full_action(world, entity, i_store):
+'''def create_miner_full_action(world, entity, i_store):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
 
       entity_pt = entity.get_position()
       smith = world.find_nearest(entity_pt, entities.Blacksmith)
-      (tiles, found) = miner_to_smith(world, entity, smith)
+      (tiles, found) = world.miner_to_smith(entity, smith)
 
       new_entity = entity
       if found:
@@ -137,10 +137,10 @@ def create_miner_full_action(world, entity, i_store):
          create_miner_action(world, new_entity, i_store),
          current_ticks + new_entity.get_rate())
       return tiles
-   return action
+   return action'''
 
 
-def blob_to_vein(world, entity, vein):
+'''def blob_to_vein(world, entity, vein):
    entity_pt = entity.get_position()
    if not vein:
       return ([entity_pt], False)
@@ -149,20 +149,20 @@ def blob_to_vein(world, entity, vein):
       remove_entity(world, vein)
       return ([vein_pt], True)
    else:
-      new_pt = blob_next_position(world, entity_pt, vein_pt)
+      new_pt = world.blob_next_position(entity_pt, vein_pt)
       old_entity = world.get_tile_occupant(new_pt)
       if isinstance(old_entity, entities.Ore):
          remove_entity(world, old_entity)
-      return (world.move_entity(entity, new_pt), False)
+      return (world.move_entity(entity, new_pt), False)'''
 
 
-def create_ore_blob_action(world, entity, i_store):
+'''def create_ore_blob_action(world, entity, i_store):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
 
       entity_pt = entity.get_position()
       vein = world.find_nearest(entity_pt, entities.Vein)
-      (tiles, found) = blob_to_vein(world, entity, vein)
+      (tiles, found) = world.blob_to_vein(entity, vein)
 
       next_time = current_ticks + entity.get_rate()
       if found:
@@ -175,10 +175,10 @@ def create_ore_blob_action(world, entity, i_store):
          next_time)
 
       return tiles
-   return action
+   return action'''
 
 
-def find_open_around(world, pt, distance):
+'''def find_open_around(world, pt, distance):
    for dy in range(-distance, distance + 1):
       for dx in range(-distance, distance + 1):
          new_pt = point.Point(pt.x + dx, pt.y + dy)
@@ -187,14 +187,14 @@ def find_open_around(world, pt, distance):
             (not world.is_occupied(new_pt))):
             return new_pt
 
-   return None
+   return None'''
 
 
-def create_vein_action(world, entity, i_store):
+'''def create_vein_action(world, entity, i_store):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
 
-      open_pt = find_open_around(world, entity.get_position(),
+      open_pt = world.find_open_around(entity.get_position(),
          entity.get_resource_distance())
       if open_pt:
          ore = create_ore(world,
@@ -209,7 +209,7 @@ def create_vein_action(world, entity, i_store):
          create_vein_action(world, entity, i_store),
          current_ticks + entity.get_rate())
       return tiles
-   return action
+   return action'''
 
 
 def try_transform_miner_full(world, entity):
@@ -232,7 +232,7 @@ def try_transform_miner_not_full(world, entity):
       return new_entity
 
 
-def try_transform_miner(world, entity, transform):
+'''def try_transform_miner(world, entity, transform):
    new_entity = transform(world, entity)
    if entity != new_entity:
       clear_pending_actions(world, entity)
@@ -240,14 +240,14 @@ def try_transform_miner(world, entity, transform):
       world.add_entity(new_entity)
       schedule_animation(world, new_entity)
 
-   return new_entity
+   return new_entity'''
 
 
 def create_miner_action(world, entity, image_store):
    if isinstance(entity, entities.MinerNotFull):
-      return create_miner_not_full_action(world, entity, image_store)
+      return world.create_miner_not_full_action(entity, image_store)
    else:
-      return create_miner_full_action(world, entity, image_store)
+      return world.create_miner_full_action(entity, image_store)
 
 
 def create_animation_action(world, entity, repeat_count):
@@ -306,13 +306,13 @@ def create_blob(world, name, pt, rate, ticks, i_store):
 
 
 def schedule_blob(world, blob, ticks, i_store):
-   schedule_action(world, blob, create_ore_blob_action(world, blob, i_store),
+   schedule_action(world, blob, world.create_ore_blob_action(blob, i_store),
       ticks + blob.get_rate())
    schedule_animation(world, blob)
 
 
 def schedule_miner(world, miner, ticks, i_store):
-   schedule_action(world, miner, create_miner_action(world, miner, i_store),
+   schedule_action(world, miner, world.create_miner_action(miner, i_store),
       ticks + miner.get_rate())
    schedule_animation(world, miner)
 
@@ -352,7 +352,7 @@ def create_vein(world, name, pt, ticks, i_store):
 
 
 def schedule_vein(world, vein, ticks, i_store):
-   schedule_action(world, vein, create_vein_action(world, vein, i_store),
+   schedule_action(world, vein, world.create_vein_action(vein, i_store),
       ticks + vein.get_rate())
 
 
