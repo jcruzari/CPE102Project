@@ -117,6 +117,10 @@ methods:
    find_open_around
    create_vein_action
    try_transform_miner
+   create_miner_action
+   create_animation_action
+   create_entity_death_action
+   create_ore_transform_action
 
 Not changed:
 controller.py
