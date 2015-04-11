@@ -5,6 +5,7 @@ import actions
 import occ_grid
 import point
 
+BLOB_RATE_SCALE = 4
 class WorldModel:
    def __init__(self, num_rows, num_cols, background):
       self.background = occ_grid.Grid(num_cols, num_rows, background)
@@ -190,7 +191,7 @@ class WorldModel:
                actions.try_transform_miner_full)
 
          actions.schedule_action(self, new_entity,
-            actions.create_miner_action(self, new_entity, i_store),
+            self.create_miner_action(new_entity, i_store),
             current_ticks + new_entity.get_rate())
          return tiles
       return action
@@ -278,6 +279,42 @@ class WorldModel:
          return self.create_miner_not_full_action(entity, image_store)
       else:
          return self.create_miner_full_action(entity, image_store)
+
+   def create_animation_action(self, entity, repeat_count):
+      def action(current_ticks):
+         entities.remove_pending_action(entity, action)
+
+         entities.next_image(entity)
+
+         if repeat_count != 1:
+            actions.schedule_action(self, entity,
+               self.create_animation_action(entity, max(repeat_count - 1, 0)),
+               current_ticks + entities.get_animation_rate(entity))
+
+         return [entity.get_position()]
+      return action
+
+   def create_entity_death_action(self, entity):
+      def action(current_ticks):
+         entities.remove_pending_action(entity, action)
+         pt = entity.get_position()
+         actions.remove_entity(self, entity)
+         return [pt]
+      return action
+
+   def create_ore_transform_action(self, entity, i_store):
+      def action(current_ticks):
+         entities.remove_pending_action(entity, action)
+         blob = actions.create_blob(self, entity.get_name() + " -- blob",
+            entity.get_position(),
+            entity.get_rate() // BLOB_RATE_SCALE,
+            current_ticks, i_store)
+
+         actions.remove_entity(self, entity)
+         self.add_entity(blob)
+
+         return [blob.get_position()]
+      return action
 
 '''def within_bounds(world, pt):
    return (pt.x >= 0 and pt.x < world.num_cols and

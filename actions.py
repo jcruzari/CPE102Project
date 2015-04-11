@@ -243,14 +243,14 @@ def try_transform_miner_not_full(world, entity):
    return new_entity'''
 
 
-def create_miner_action(world, entity, image_store):
+'''def create_miner_action(world, entity, image_store):
    if isinstance(entity, entities.MinerNotFull):
       return world.create_miner_not_full_action(entity, image_store)
    else:
-      return world.create_miner_full_action(entity, image_store)
+      return world.create_miner_full_action(entity, image_store)'''
 
 
-def create_animation_action(world, entity, repeat_count):
+'''def create_animation_action(world, entity, repeat_count):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
 
@@ -262,19 +262,19 @@ def create_animation_action(world, entity, repeat_count):
             current_ticks + entities.get_animation_rate(entity))
 
       return [entity.get_position()]
-   return action
+   return action'''
 
 
-def create_entity_death_action(world, entity):
+'''def create_entity_death_action(world, entity):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
       pt = entity.get_position()
       remove_entity(world, entity)
       return [pt]
-   return action
+   return action'''
 
 
-def create_ore_transform_action(world, entity, i_store):
+'''def create_ore_transform_action(world, entity, i_store):
    def action(current_ticks):
       entities.remove_pending_action(entity, action)
       blob = create_blob(world, entity.get_name() + " -- blob",
@@ -286,7 +286,7 @@ def create_ore_transform_action(world, entity, i_store):
       world.add_entity(blob)
 
       return [blob.get_position()]
-   return action
+   return action'''
 
 
 def remove_entity(world, entity):
@@ -327,7 +327,7 @@ def create_ore(world, name, pt, ticks, i_store):
 
 def schedule_ore(world, ore, ticks, i_store):
    schedule_action(world, ore,
-      create_ore_transform_action(world, ore, i_store),
+      world.create_ore_transform_action(ore, i_store),
       ticks + ore.get_rate())
 
 
@@ -340,7 +340,7 @@ def create_quake(world, pt, ticks, i_store):
 
 def schedule_quake(world, quake, ticks):
    schedule_animation(world, quake, QUAKE_STEPS) 
-   schedule_action(world, quake, create_entity_death_action(world, quake),
+   schedule_action(world, quake, world.create_entity_death_action(quake),
       ticks + QUAKE_DURATION)
 
 
@@ -363,7 +363,7 @@ def schedule_action(world, entity, action, time):
 
 def schedule_animation(world, entity, repeat_count=0):
    schedule_action(world, entity,
-      create_animation_action(world, entity, repeat_count),
+      world.create_animation_action(entity, repeat_count),
       entities.get_animation_rate(entity))
 
 
