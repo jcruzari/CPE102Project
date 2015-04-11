@@ -66,7 +66,7 @@ class WorldView:
             img = self.get_tile_image(v_pt)
             rects.append(self.update_tile(v_pt, img))
             if self.mouse_pt.x == v_pt.x and self.mouse_pt.y == v_pt.y:
-               rects.append(update_mouse_cursor(self))
+               rects.append(self.update_mouse_cursor())
 
       pygame.display.update(rects)
 
@@ -89,6 +89,23 @@ class WorldView:
          return img
       else:
          return bgnd
+
+   def create_mouse_surface(self, occupied):
+      surface = pygame.Surface((self.tile_width, self.tile_height))
+      surface.set_alpha(MOUSE_HOVER_ALPHA)
+      color = MOUSE_HOVER_EMPTY_COLOR
+      if occupied:
+         color = MOUSE_HOVER_OCC_COLOR
+      surface.fill(color)
+      if self.mouse_img:
+         surface.blit(self.mouse_img, (0, 0))
+
+      return surface
+
+   def update_mouse_cursor(self):
+      return self.update_tile(self.mouse_pt,
+         self.create_mouse_surface(self.world.is_occupied(
+               self.viewport_to_world(self.mouse_pt))))
 
 '''def viewport_to_world(viewport, pt):
    return point.Point(pt.x + viewport.left, pt.y + viewport.top)'''
@@ -174,7 +191,7 @@ def clamp(v, low, high):
       return bgnd'''
 
 
-def create_mouse_surface(view, occupied):
+'''def create_mouse_surface(view, occupied):
    surface = pygame.Surface((view.tile_width, view.tile_height))
    surface.set_alpha(MOUSE_HOVER_ALPHA)
    color = MOUSE_HOVER_EMPTY_COLOR
@@ -184,14 +201,14 @@ def create_mouse_surface(view, occupied):
    if view.mouse_img:
       surface.blit(view.mouse_img, (0, 0))
 
-   return surface
+   return surface'''
 
 
-def update_mouse_cursor(view):
+'''def update_mouse_cursor(view):
    return view.update_tile(view.mouse_pt,
       create_mouse_surface(view,
          view.world.is_occupied(
-            view.viewport_to_world(view.mouse_pt))))
+            view.viewport_to_world(view.mouse_pt))))'''
 
 
 def mouse_move(view, new_mouse_pt):
@@ -204,7 +221,7 @@ def mouse_move(view, new_mouse_pt):
       new_mouse_pt.y + view.viewport.top):
       view.mouse_pt = new_mouse_pt
 
-   rects.append(update_mouse_cursor(view))
+   rects.append(view.update_mouse_cursor())
 
    pygame.display.update(rects)
 
