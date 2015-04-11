@@ -1,0 +1,119 @@
+class WorldView:
+methods
+   viewport_to_world
+   world_to_viewport
+   create_shifted_viewport
+   draw_background
+   draw_entities
+   draw_viewport
+   update_view
+   update_view_tiles
+   update_tile
+   get_tile_image
+   create_mouse_surface
+   update_mouse_cursor
+   def mouse_move
+
+class Grid:
+methods:
+   set_cell
+   get_cell
+
+class Background:
+methods:
+   get_images
+   get_name   
+
+class MinerNotFull:
+methods:
+   set_position
+   get_position
+   get_images
+   get_rate
+   get_resource_limit
+   get_name
+   
+class MinerFull:
+methods:
+   set_position
+   get_position
+   get_images
+   get_rate
+   get_resource_limit
+   get_name
+   
+class Vein:
+methods:
+   set_position
+   get_position
+   get_images
+   get_rate
+   get_resource_distance
+   get_name
+
+class Ore:
+methods:
+   set_position
+   get_position
+   get_images
+   get_rate
+   get_name
+
+class Blacksmith:
+methods:
+   set_position
+   get_position
+   get_images
+   get_rate
+   get_name     
+
+class Obstacle:
+methods:
+   set_position
+   get_position
+   get_images
+   get_name     
+
+class OreBlob:
+methods:
+   set_position
+   get_position
+   get_images
+   get_rate
+   get_name
+
+class Quake:
+methods:
+   set_position
+   get_position
+   get_images
+   get_name
+
+class WorldModel:
+methods:
+   within_bounds
+   is_occupied
+   find_nearest
+   add_entity
+   move_entity
+   remove_entity
+   remove_entity_at
+   schedule_action
+   unschedule_action
+   update_on_time
+   get_background_image
+   get_background
+   set_background
+   get_tile_occupant
+   get_entities
+   next_position
+   blob_next_position
+   miner_to_ore
+   miner_to_smith
+   create_miner_not_full_action
+   create_miner_full_action
+   blob_to_vein
+   create_ore_blob_action
+   find_open_around
+   create_vein_action
+   try_transform_miner
