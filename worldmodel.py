@@ -20,7 +20,7 @@ class WorldModel:
 
    def is_occupied(self, pt):
       return (self.within_bounds(pt) and
-         occ_grid.get_cell(self.occupancy, pt) != None)
+         self.occupancy.get_cell(pt) != None)
 
    def find_nearest(self, pt, type):
       oftype = [(e, distance_sq(pt, e.get_position()))
@@ -31,19 +31,19 @@ class WorldModel:
    def add_entity(self, entity):
       pt = entity.get_position()
       if self.within_bounds(pt):
-         old_entity = occ_grid.get_cell(self.occupancy, pt)
+         old_entity = self.occupancy.get_cell(pt)
          if old_entity != None:
             entities.clear_pending_actions(old_entity)
-         occ_grid.set_cell(self.occupancy, pt, entity)
+         self.occupancy.set_cell(pt, entity)
          self.entities.append(entity)
 
    def move_entity(self, entity, pt):
       tiles = []
       if self.within_bounds(pt):
          old_pt = entity.get_position()
-         occ_grid.set_cell(self.occupancy, old_pt, None)
+         self.occupancy.set_cell(old_pt, None)
          tiles.append(old_pt)
-         occ_grid.set_cell(self.occupancy, pt, entity)
+         self.occupancy.set_cell(pt, entity)
          tiles.append(pt)
          entity.set_position(pt)
 
@@ -54,11 +54,11 @@ class WorldModel:
 
    def remove_entity_at(self, pt):
       if (self.within_bounds(pt) and
-         occ_grid.get_cell(self.occupancy, pt) != None):
-         entity = occ_grid.get_cell(self.occupancy, pt)
+         self.occupancy.get_cell(pt) != None):
+         entity = self.occupancy.get_cell(pt)
          entity.set_position(point.Point(-1, -1))
          self.entities.remove(entity)
-         occ_grid.set_cell(self.occupancy, pt, None)
+         self.occupancy.set_cell(pt, None)
 
    def schedule_action(self, action, time):
       self.action_queue.insert(action, time)
@@ -79,19 +79,19 @@ class WorldModel:
 
    def get_background_image(self, pt):
       if self.within_bounds(pt):
-        return entities.get_image(occ_grid.get_cell(self.background, pt))
+        return entities.get_image(self.background.get_cell(pt))
 
    def get_background(self, pt):
       if self.within_bounds(pt):
-         return occ_grid.get_cell(self.background, pt)
+         return self.background.get_cell(pt)
 
    def set_background(self, pt, bgnd):
       if self.within_bounds(pt):
-         occ_grid.set_cell(self.background, pt, bgnd)
+         self.background.set_cell(pt, bgnd)
 
    def get_tile_occupant(self, pt):
       if self.within_bounds(pt):
-         return occ_grid.get_cell(self.occupancy, pt)
+         return self.occupancy.get_cell(pt)
 
    def get_entities(self):
       return self.entities
