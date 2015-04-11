@@ -117,3 +117,13 @@ methods:
    find_open_around
    create_vein_action
    try_transform_miner
+
+Not changed:
+controller.py
+builder_controller.py
+mouse_buttons.py
+save_load.py
+image_store.py
+ordered_list.py
+point.py
+None of the functions in these files felt like they fit in a specific class since they either seemed to work with file input or did not directly interact with a class.   
