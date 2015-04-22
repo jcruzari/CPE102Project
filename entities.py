@@ -106,30 +106,12 @@ class Obstacle:
    def get_name(self):
       return self.name
 
-class OreBlob:
+class OreBlob(Entity):
    def __init__(self, name, position, rate, imgs, animation_rate):
-      self.name = name
-      self.position = position
-      self.rate = rate
-      self.imgs = imgs
+      super(OreBlob, self).__init__(name, position, rate, imgs)
       self.current_img = 0
       self.animation_rate = animation_rate
       self.pending_actions = []
-
-   def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_rate(self):
-      return self.rate
-
-   def get_name(self):
-      return self.name
 
 class Quake:
    def __init__(self, name, position, imgs, animation_rate):
