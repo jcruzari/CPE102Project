@@ -22,17 +22,11 @@ class Entity(object):
    def get_name(self):
       return self.name
 
-class Background:
+class Background(Entity):
    def __init__(self, name, imgs):
       self.name = name
       self.imgs = imgs
       self.current_img = 0
-
-   def get_images(self):
-      return self.imgs
-
-   def get_name(self):
-      return self.name
 
 class Miner(Entity):
    def __init__(self, name, resource_limit, position, rate, imgs,
