@@ -1,5 +1,27 @@
 import point
 
+class Entity(object):
+   def __init__(self, name, position, rate, imgs):
+      self.name = name
+      self.position = position
+      self.rate = rate
+      self.imgs = imgs
+
+   def set_position(self, point):
+      self.position = point
+
+   def get_position(self):
+      return self.position
+
+   def get_images(self):
+      return self.imgs
+
+   def get_rate(self):
+      return self.rate
+
+   def get_name(self):
+      return self.name
+
 class Background:
    def __init__(self, name, imgs):
       self.name = name
@@ -13,147 +35,57 @@ class Background:
       return self.name
 
 
-class MinerNotFull:
+class MinerNotFull(Entity):
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
-      self.name = name
-      self.position = position
-      self.rate = rate
-      self.imgs = imgs
       self.current_img = 0
       self.resource_limit = resource_limit
       self.resource_count = 0
       self.animation_rate = animation_rate
       self.pending_actions = []
-
-   def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_rate(self):
-      return self.rate
+      super(MinerNotFull, self).__init__(name, position, rate, imgs)
 
    def get_resource_limit(self):
       return self.resource_limit
 
-   def get_name(self):
-      return self.name
-
-class MinerFull:
+class MinerFull(Entity):
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
-      self.name = name
-      self.position = position
-      self.rate = rate
-      self.imgs = imgs
       self.current_img = 0
       self.resource_limit = resource_limit
       self.resource_count = resource_limit
       self.animation_rate = animation_rate
       self.pending_actions = []
-
-   def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_rate(self):
-      return self.rate
+      super(MinerFull, self).__init__(name, position, rate, imgs)
 
    def get_resource_limit(self):
       return self.resource_limit
 
-   def get_name(self):
-      return self.name
-
-class Vein:
+class Vein(Entity):
    def __init__(self, name, rate, position, imgs, resource_distance=1):
-      self.name = name
-      self.position = position
-      self.rate = rate
-      self.imgs = imgs
+      super(Vein, self).__init__(name, position, rate, imgs)
       self.current_img = 0
       self.resource_distance = resource_distance
       self.pending_actions = []
-
-   def set_position(self, point):
-      self.position = point
-   
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_rate(self):
-      return self.rate
 
    def get_resource_distance(self):
       return self.resource_distance
 
-   def get_name(self):
-      return self.name
-
-class Ore:
+class Ore(Entity):
    def __init__(self, name, position, imgs, rate=5000):
-      self.name = name
-      self.position = position
-      self.imgs = imgs
       self.current_img = 0
-      self.rate = rate
       self.pending_actions = []
+      super(Ore, self).__init__(name, position, rate, imgs)
 
-   def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_rate(self):
-      return self.rate
-
-   def get_name(self):
-      return self.name
-
-class Blacksmith:
+class Blacksmith(Entity):
    def __init__(self, name, position, imgs, resource_limit, rate,
       resource_distance=1):
-      self.name = name
-      self.position = position
-      self.imgs = imgs
       self.current_img = 0
       self.resource_limit = resource_limit
       self.resource_count = 0
-      self.rate = rate
       self.resource_distance = resource_distance
       self.pending_actions = []
-
-   def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_rate(self):
-      return self.rate
-
-   def get_name(self):
-      return self.name
+      super(Blacksmith, self).__init__(name, position, rate, imgs)
 
 class Obstacle:
    def __init__(self, name, position, imgs):
