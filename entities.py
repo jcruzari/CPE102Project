@@ -34,32 +34,33 @@ class Background:
    def get_name(self):
       return self.name
 
+class Miner(Entity):
+   def __init__(self, name, resource_limit, position, rate, imgs,
+      animation_rate):
+      super(Miner, self).__init__(name, position, rate, imgs)
+      self.resource_limit = resource_limit
+      self.animation_rate = animation_rate
 
-class MinerNotFull(Entity):
+   def get_resource_limit(self):
+      return self.resource_limit
+
+class MinerNotFull(Miner):
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
       self.current_img = 0
-      self.resource_limit = resource_limit
       self.resource_count = 0
-      self.animation_rate = animation_rate
       self.pending_actions = []
-      super(MinerNotFull, self).__init__(name, position, rate, imgs)
+      super(MinerNotFull, self).__init__(name, resource_limit, position, rate, imgs,
+         animation_rate)
 
-   def get_resource_limit(self):
-      return self.resource_limit
-
-class MinerFull(Entity):
+class MinerFull(Miner):
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
       self.current_img = 0
-      self.resource_limit = resource_limit
       self.resource_count = resource_limit
-      self.animation_rate = animation_rate
       self.pending_actions = []
-      super(MinerFull, self).__init__(name, position, rate, imgs)
-
-   def get_resource_limit(self):
-      return self.resource_limit
+      super(MinerFull, self).__init__(name, resource_limit, position, rate, imgs,
+         animation_rate)
 
 class Vein(Entity):
    def __init__(self, name, rate, position, imgs, resource_distance=1):
