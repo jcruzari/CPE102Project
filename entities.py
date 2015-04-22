@@ -28,12 +28,16 @@ class Background(Entity):
       self.imgs = imgs
       self.current_img = 0
 
-class Miner(Entity):
+class Animated(Entity):
+   def __init__(self, name, position, rate, imgs, animation_rate):
+      self.animation_rate = animation_rate
+      super(Animated, self).__init__(name, position, rate, imgs)
+
+class Miner(Animated):
    def __init__(self, name, resource_limit, position, rate, imgs,
       animation_rate):
-      super(Miner, self).__init__(name, position, rate, imgs)
+      super(Miner, self).__init__(name, position, rate, imgs, animation_rate)
       self.resource_limit = resource_limit
-      self.animation_rate = animation_rate
 
    def get_resource_limit(self):
       return self.resource_limit
@@ -82,14 +86,14 @@ class Blacksmith(Entity):
       self.pending_actions = []
       super(Blacksmith, self).__init__(name, position, rate, imgs)
 
-class Obstacle:
+class Obstacle(Entity):
    def __init__(self, name, position, imgs):
       self.name = name
       self.position = position
       self.imgs = imgs
       self.current_img = 0
 
-   def set_position(self, point):
+   '''def set_position(self, point):
       self.position = point
 
    def get_position(self):
@@ -99,16 +103,15 @@ class Obstacle:
       return self.imgs
 
    def get_name(self):
-      return self.name
+      return self.name'''
 
-class OreBlob(Entity):
+class OreBlob(Animated):
    def __init__(self, name, position, rate, imgs, animation_rate):
-      super(OreBlob, self).__init__(name, position, rate, imgs)
+      super(OreBlob, self).__init__(name, position, rate, imgs, animation_rate)
       self.current_img = 0
-      self.animation_rate = animation_rate
       self.pending_actions = []
 
-class Quake:
+class Quake(Entity):
    def __init__(self, name, position, imgs, animation_rate):
       self.name = name
       self.position = position
@@ -117,7 +120,7 @@ class Quake:
       self.animation_rate = animation_rate
       self.pending_actions = []
 
-   def set_position(self, point):
+   '''def set_position(self, point):
       self.position = point
 
    def get_position(self):
@@ -127,7 +130,7 @@ class Quake:
       return self.imgs
 
    def get_name(self):
-      return self.name
+      return self.name'''
 
 '''def set_position(entity, point):
    entity.position = point'''
