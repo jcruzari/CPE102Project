@@ -22,6 +22,40 @@ class Entity(object):
    def get_name(self):
       return self.name
 
+   def get_animation_rate(self):
+      return self.animation_rate
+
+   def remove_pending_action(self, action):
+      if hasattr(self, "pending_actions"):
+         self.pending_actions.remove(action)
+
+   def add_pending_action(self, action):
+      if hasattr(self, "pending_actions"):
+         self.pending_actions.append(action)
+
+
+   def get_pending_actions(self):
+      if hasattr(self, "pending_actions"):
+         return self.pending_actions
+      else:
+         return []
+
+   def clear_pending_actions(self):
+      if hasattr(self, "pending_actions"):
+         self.pending_actions = []
+
+   def get_image(entity):
+      return entity.imgs[entity.current_img]
+
+   def set_resource_count(self, n):
+      self.resource_count = n
+
+   def get_resource_count(self):
+      return self.resource_count
+
+   def next_image(self):
+      self.current_img = (self.current_img + 1) % len(self.imgs)
+
 class Background(Entity):
    def __init__(self, name, imgs):
       self.name = name
@@ -93,18 +127,6 @@ class Obstacle(Entity):
       self.imgs = imgs
       self.current_img = 0
 
-   '''def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_name(self):
-      return self.name'''
-
 class OreBlob(Animated):
    def __init__(self, name, position, rate, imgs, animation_rate):
       super(OreBlob, self).__init__(name, position, rate, imgs, animation_rate)
@@ -120,35 +142,8 @@ class Quake(Entity):
       self.animation_rate = animation_rate
       self.pending_actions = []
 
-   '''def set_position(self, point):
-      self.position = point
-
-   def get_position(self):
-      return self.position
-
-   def get_images(self):
-      return self.imgs
-
-   def get_name(self):
-      return self.name'''
-
-'''def set_position(entity, point):
-   entity.position = point'''
-
-'''def get_position(entity):
-   return entity.position'''
-
-
-'''def get_images(entity):
-   return entity.imgs'''
-
-def get_image(entity):
+'''def get_image(entity):
    return entity.imgs[entity.current_img]
-
-
-'''def get_rate(entity):
-   return entity.rate'''
-
 
 def set_resource_count(entity, n):
    entity.resource_count = n
@@ -156,45 +151,8 @@ def set_resource_count(entity, n):
 def get_resource_count(entity):
    return entity.resource_count
 
-
-'''def get_resource_limit(entity):
-   return entity.resource_limit'''
-
-
-'''def get_resource_distance(entity):
-   return entity.resource_distance'''
-
-
-'''def get_name(entity):
-   return entity.name'''
-
-
-def get_animation_rate(entity):
-   return entity.animation_rate
-
-
-def remove_pending_action(entity, action):
-   if hasattr(entity, "pending_actions"):
-      entity.pending_actions.remove(action)
-
-def add_pending_action(entity, action):
-   if hasattr(entity, "pending_actions"):
-      entity.pending_actions.append(action)
-
-
-def get_pending_actions(entity):
-   if hasattr(entity, "pending_actions"):
-      return entity.pending_actions
-   else:
-      return []
-
-def clear_pending_actions(entity):
-   if hasattr(entity, "pending_actions"):
-      entity.pending_actions = []
-
-
 def next_image(entity):
-   entity.current_img = (entity.current_img + 1) % len(entity.imgs)
+   entity.current_img = (entity.current_img + 1) % len(entity.imgs)'''
 
 
 # This is a less than pleasant file format, but structured based on

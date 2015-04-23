@@ -34,7 +34,7 @@ class WorldModel:
       if self.within_bounds(pt):
          old_entity = self.occupancy.get_cell(pt)
          if old_entity != None:
-            entities.clear_pending_actions(old_entity)
+            old_entity.clear_pending_actions()
          self.occupancy.set_cell(pt, entity)
          self.entities.append(entity)
 
@@ -80,7 +80,7 @@ class WorldModel:
 
    def get_background_image(self, pt):
       if self.within_bounds(pt):
-        return entities.get_image(self.background.get_cell(pt))
+        return self.background.get_cell(pt).get_image()
 
    def get_background(self, pt):
       if self.within_bounds(pt):
@@ -135,8 +135,7 @@ class WorldModel:
          return ([entity_pt], False)
       ore_pt = ore.get_position()
       if actions.adjacent(entity_pt, ore_pt):
-         entities.set_resource_count(entity,
-            1 + entities.get_resource_count(entity))
+         entity.set_resource_count(1 + entity.get_resource_count())
          actions.remove_entity(self, ore)
          return ([ore_pt], True)
       else:
@@ -149,10 +148,9 @@ class WorldModel:
          return ([entity_pt], False)
       smith_pt = smith.get_position()
       if actions.adjacent(entity_pt, smith_pt):
-         entities.set_resource_count(smith,
-            entities.get_resource_count(smith) +
-            entities.get_resource_count(entity))
-         entities.set_resource_count(entity, 0)
+         smith.set_resource_count(smith.get_resource_count() +
+            entity.get_resource_count())
+         entity.set_resource_count(0)
          return ([], True)
       else:
          new_pt = self.next_position(entity_pt, smith_pt)
@@ -160,7 +158,7 @@ class WorldModel:
 
    def create_miner_not_full_action(self, entity, i_store):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
 
          entity_pt = entity.get_position()
          ore = self.find_nearest(entity_pt, entities.Ore)
@@ -179,7 +177,7 @@ class WorldModel:
 
    def create_miner_full_action(self, entity, i_store):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
 
          entity_pt = entity.get_position()
          smith = self.find_nearest(entity_pt, entities.Blacksmith)
@@ -213,7 +211,7 @@ class WorldModel:
 
    def create_ore_blob_action(self, entity, i_store):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
 
          entity_pt = entity.get_position()
          vein = self.find_nearest(entity_pt, entities.Vein)
@@ -245,7 +243,7 @@ class WorldModel:
 
    def create_vein_action(self, entity, i_store):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
 
          open_pt = self.find_open_around(entity.get_position(),
             entity.get_resource_distance())
@@ -282,21 +280,21 @@ class WorldModel:
 
    def create_animation_action(self, entity, repeat_count):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
 
-         entities.next_image(entity)
+         entity.next_image()
 
          if repeat_count != 1:
             actions.schedule_action(self, entity,
                self.create_animation_action(entity, max(repeat_count - 1, 0)),
-               current_ticks + entities.get_animation_rate(entity))
+               current_ticks + entity.get_animation_rate())
 
          return [entity.get_position()]
       return action
 
    def create_entity_death_action(self, entity):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
          pt = entity.get_position()
          actions.remove_entity(self, entity)
          return [pt]
@@ -304,7 +302,7 @@ class WorldModel:
 
    def create_ore_transform_action(self, entity, i_store):
       def action(current_ticks):
-         entities.remove_pending_action(entity, action)
+         entity.remove_pending_action(action)
          blob = actions.create_blob(self, entity.get_name() + " -- blob",
             entity.get_position(),
             entity.get_rate() // BLOB_RATE_SCALE,
@@ -315,16 +313,6 @@ class WorldModel:
 
          return [blob.get_position()]
       return action
-
-'''def within_bounds(world, pt):
-   return (pt.x >= 0 and pt.x < world.num_cols and
-      pt.y >= 0 and pt.y < world.num_rows)'''
-
-
-'''def is_occupied(world, pt):
-   return (world.within_bounds(pt) and
-      occ_grid.get_cell(world.occupancy, pt) != None)'''
-
 
 def nearest_entity(entity_dists):
    if len(entity_dists) > 0:
@@ -341,90 +329,3 @@ def nearest_entity(entity_dists):
 
 def distance_sq(p1, p2):
    return (p1.x - p2.x)**2 + (p1.y - p2.y)**2
-
-
-'''def find_nearest(world, pt, type):
-   oftype = [(e, distance_sq(pt, e.get_position()))
-      for e in world.entities if isinstance(e, type)]
-
-   return nearest_entity(oftype)'''
-
-
-'''def add_entity(world, entity):
-   pt = entity.get_position()
-   if world.within_bounds(pt):
-      old_entity = occ_grid.get_cell(world.occupancy, pt)
-      if old_entity != None:
-         entities.clear_pending_actions(old_entity)
-      occ_grid.set_cell(world.occupancy, pt, entity)
-      world.entities.append(entity)'''
-
-
-'''def move_entity(world, entity, pt):
-   tiles = []
-   if world.within_bounds(pt):
-      old_pt = entity.get_position()
-      occ_grid.set_cell(world.occupancy, old_pt, None)
-      tiles.append(old_pt)
-      occ_grid.set_cell(world.occupancy, pt, entity)
-      tiles.append(pt)
-      entity.set_position(pt)
-
-   return tiles'''
-
-
-'''def remove_entity(world, entity):
-   remove_entity_at(world, entity.get_position())'''
-
-
-'''def remove_entity_at(world, pt):
-   if (world.within_bounds(pt) and
-      occ_grid.get_cell(world.occupancy, pt) != None):
-      entity = occ_grid.get_cell(world.occupancy, pt)
-      entity.set_position(point.Point(-1, -1))
-      world.entities.remove(entity)
-      occ_grid.set_cell(world.occupancy, pt, None)'''
-
-
-'''def schedule_action(world, action, time):
-   world.action_queue.insert(action, time)'''
-
-
-'''def unschedule_action(world, action):
-   world.action_queue.remove(action)'''
-
-
-'''def update_on_time(world, ticks):
-   tiles = []
-
-   next = world.action_queue.head()
-   while next and next.ord < ticks:
-      world.action_queue.pop()
-      tiles.extend(next.item(ticks))  # invoke action function
-      next = world.action_queue.head()
-
-   return tiles'''
-
-
-'''def get_background_image(world, pt):
-   if world.within_bounds(pt):
-      return entities.get_image(occ_grid.get_cell(world.background, pt))'''
-
-
-'''def get_background(world, pt):
-   if world.within_bounds(pt):
-      return occ_grid.get_cell(world.background, pt)'''
-
-
-'''def set_background(world, pt, bgnd):
-   if world.within_bounds(pt):
-      occ_grid.set_cell(world.background, pt, bgnd)'''
-
-
-'''def get_tile_occupant(world, pt):
-   if world.within_bounds(pt):
-      return occ_grid.get_cell(world.occupancy, pt)'''
-
-
-'''def get_entities(world):
-   return world.entities'''
