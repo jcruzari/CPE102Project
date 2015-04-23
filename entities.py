@@ -142,19 +142,6 @@ class Quake(Entity):
       self.animation_rate = animation_rate
       self.pending_actions = []
 
-'''def get_image(entity):
-   return entity.imgs[entity.current_img]
-
-def set_resource_count(entity, n):
-   entity.resource_count = n
-
-def get_resource_count(entity):
-   return entity.resource_count
-
-def next_image(entity):
-   entity.current_img = (entity.current_img + 1) % len(entity.imgs)'''
-
-
 # This is a less than pleasant file format, but structured based on
 # material covered in course.  Something like JSON would be a
 # significant improvement.
